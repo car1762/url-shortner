@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>URL Shortener</title>
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background: #f0f4f8;
+        color: #333;
+        margin: 0;
+        padding: 20px;
+      }
+
+      .container {
+        max-width: 700px;
+        margin: auto;
+        background: #fff;
+        padding: 30px;
+        border-radius: 12px;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+      }
+
+      h1 {
+        text-align: center;
+        color: #2563eb;
+        margin-bottom: 30px;
+        font-size: 26px;
+      }
+
+      form {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      label {
+        font-weight: bold;
+      }
+
+      input[type="text"] {
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        font-size: 16px;
+      }
+
+      button {
+        padding: 12px;
+        background-color: #2563eb;
+        color: white;
+        font-weight: bold;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+      }
+
+      button:hover {
+        background-color: #1d4ed8;
+      }
+
+      p {
+        background-color: #e0f2fe;
+        padding: 10px;
+        border-left: 4px solid #2563eb;
+        border-radius: 6px;
+        margin-bottom: 20px;
+        font-size: 15px;
+        word-wrap: break-word;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+      }
+
+      th,
+      td {
+        border: 1px solid #ddd;
+        padding: 12px;
+        text-align: center;
+        font-size: 15px;
+      }
+
+      th {
+        background-color: #2563eb;
+        color: white;
+      }
+
+      tr:nth-child(even) {
+        background-color: #f9fafb;
+      }
+
+      tr:hover {
+        background-color: #f1f5f9;
+      }
+
+      /* 🔁 Mobile View */
+      @media (max-width: 600px) {
+        table,
+        thead,
+        tbody,
+        th,
+        td,
+        tr {
+          display: block;
+        }
+
+        thead {
+          display: none;
+        }
+
+        tr {
+          margin-bottom: 15px;
+          background-color: #fff;
+          border: 1px solid #ddd;
+          border-radius: 10px;
+          padding: 15px;
+          box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        td {
+          text-align: left;
+          padding: 8px 10px;
+          position: relative;
+        }
+
+        td::before {
+          content: attr(data-label);
+          font-weight: bold;
+          color: #2563eb;
+          display: block;
+          margin-bottom: 5px;
+        }
+
+        td:not(:last-child) {
+          border-bottom: 1px solid #f1f1f1;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="container">
+      <h1>URL Shortener</h1>
+
+      <% if (locals.id) { %>
+      <p>URL Generated: <strong>http://localhost:8001/url/<%= id %></strong></p>
+      <% } %>
+
+      <form method="POST" action="/url">
+        <label>Enter Your Original URL</label>
+        <input type="text" name="url" placeholder="https://example.com" required />
+        <button type="submit">Generate</button>
+      </form>
+
+      <% if (locals.urls && urls.length > 0) { %>
+      <table>
+        <thead>
+          <tr>
+            <th>S. No</th>
+            <th>Short ID</th>
+            <th>Redirect URL</th>
+            <th>Clicks</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% urls.forEach((url, index) => { %>
+          <tr>
+            <td data-label="S. No"><%= index + 1 %></td>
+            <td data-label="Short ID"><%= url.shortId %></td>
+            <td data-label="Redirect URL"><%= url.redirectURL %></td>
+            <td data-label="Clicks"><%= url.visitHistory.length %></td>
+          </tr>
+          <% }); %>
+        </tbody>
+      </table>
+      <% } %>
+    </div>
+  </body>
+</html>

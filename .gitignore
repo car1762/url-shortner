@@ -1,0 +1,28 @@
+# Node modules
+node_modules/
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+
+# dotenv environment files
+.env
+
+# Build output
+dist/
+build/
+
+# OS system files
+.DS_Store
+Thumbs.db
+
+# VSCode settings (optional)
+.vscode/
+
+# Coverage reports
+coverage/
+
+# Optional: if using Mac or Windows with line ending issues
+*.swp
+*.swo
